@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Form Validation</h2>
+        <form id="myForm">
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" class="form-control" id="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="errorMessage" class="pt-2"></div>
+    </div>
+    <script>
+        const form = document.getElementById('myForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            let fullName = document.getElementById('fullName').value;
+            let email = document.getElementById('email').value;
+            let phoneNumber = document.getElementById('phoneNumber').value;
+            let password = document.getElementById('password').value;
+            let confirmPassword = document.getElementById('confirmPassword').value;
+
+            let error = false;
+            let errorMessageText = '';
+
+            if (fullName.length < 5) {
+                error = true;
+                errorMessageText += 'Enter correct name<br>';
+            }
+
+            if (!email.includes('@')) {
+                error = true;
+                errorMessageText += 'Enter correct email<br>';
+            }
+
+            if (phoneNumber === '123456789' || phoneNumber.length !== 10) {
+                error = true;
+                errorMessageText += 'Enter correct phone number<br>';
+            }
+
+            if (password === 'password' || password === fullName.toLowerCase() || password.length < 8) {
+                error = true;
+                errorMessageText += 'Password is not strong<br>';
+            }
+
+            if (password !== confirmPassword) {
+                error = true;
+                errorMessageText += 'Passwords do not match<br>';
+            }
+
+            if (error) {
+                errorMessage.innerHTML = errorMessageText;
+            } else {
+                errorMessage.innerHTML = 'Form submitted successfully';
+            }
+        });
+    </script>
+</body>
+</html>
